@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Hospital</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../template/template.xhtml">
+
+            <ui:define name="content">
+                <br/>
+                <center>
+                    <p:panel header="Eliminar Usuario" style="width: 100%;">
+
+                        <h:form id="formConsulta">
+                            <p:fieldset legend="Consulta del Usuario">
+                                <h:panelGrid id="gridConsulta" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtId" value="Id. Usuario:" />
+                                    <p:column>
+                                        <p:inputText id="txtId" value="#{usuarioView.usuarioSearch.idUsr}" maxlength="10" 
+                                                     size="15" required="true" label="Id. Usuario">
+                                        </p:inputText>
+                                        <p:commandButton update="gridConsulta,confirmDialogwidget,:formModifica:gridModifica" 
+                                                         value="Consultar" actionListener="#{usuarioView.consultarUsuario()}" />
+
+                                    </p:column>
+                                    <p:message for="txtId"/>
+
+
+
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{usuarioView.mensaje.descripcion}" header="#{usuarioView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form> 
+
+
+                        <br/>
+                        <h:form id="formModifica">
+                            <p:fieldset legend="Datos del Usuario">
+                                <h:panelGrid id="gridModifica" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtPass" value="Contraseña:"/>
+                                    <p:password id="txtPass" value="#{usuarioView.usuario.pasUsr}" maxlength="10" 
+                                                size="15" required="true" label="Contraseña" readonly="true"/>
+                                    <p:message for="txtPass"/>
+
+                                    <h:outputLabel for="txtNick" value="Nick:"/>
+                                    <p:inputText id="txtNick" value="#{usuarioView.usuario.nomUsr}" maxlength="10" 
+                                                 size="15" required="true" label="Nick" readonly="true"/>
+                                    <p:message for="txtNick"/>
+
+                                    <h:outputLabel for="txtFecha" value="Fecha de Ingreso:"/>
+                                    <p:datePicker id="txtFecha" value="#{usuarioView.usuario.fecIng}" monthNavigator="true" 
+                                                  yearNavigator="true" locale="es" showIcon="true" yearRange="1900:2023"
+                                                  required="true" label="Fecha de Ingreso" disabled="true"/>
+                                    <p:message for="txtFecha"/>
+
+                                    <h:outputLabel for="txtDireccion" value="Nombre:"/>
+                                    <p:inputText id="txtDireccion" value="#{usuarioView.usuario.nameUsr}" maxlength="45" 
+                                                 size="40" required="true" label="Nombre" readonly="true"/>
+                                    <p:message for="txtDireccion"/>
+
+                                    <h:outputLabel for="txtCorreo" value="Correo Electrónico:"/>
+                                    <p:inputText id="txtCorreo" value="#{usuarioView.usuario.corUsr}" maxlength="45" 
+                                                 size="30" required="true" label="Correo" readonly="true"/>
+                                    <p:message for="txtCorreo"/>
+
+                                    <h:outputLabel for="txtTelefono" value="Telefono:"/>
+                                    <p:inputText id="txtTelefono" value="#{usuarioView.usuario.telUsr}" maxlength="10" 
+                                                 size="15" required="true" label="Teléfono" readonly="true">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                    <p:message for="txtTelefono"/>
+
+                                    <h:outputLabel for="selectRol" value="Rol:" />
+                                    <p:selectOneMenu id="selectRol" value="#{usuarioView.rolSelected}" disabled="true"
+                                                     effect="fade" var="e" converter="rolesConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Rol">
+
+                                        <f:selectItems value="#{usuarioView.listRol}" var="rol"
+                                                       itemLabel="#{rol.nombreRol}" itemValue="#{rol}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{e.nombreRol}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectRol"/>
+
+                                    <p:commandButton update="gridModifica, confirmDialogwidget, :formConsulta:gridConsulta" 
+                                                     value="Eliminar" actionListener="#{usuarioView.eliminarUsuario()}"
+                                                     disabled="#{!usuarioView.found}"/>
+
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{usuarioView.mensaje.descripcion}" header="#{usuarioView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </center>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

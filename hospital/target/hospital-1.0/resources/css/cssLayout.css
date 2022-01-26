@@ -1,0 +1,112 @@
+
+/* reset on the showcase style*/
+body .ui-panelgrid .ui-panelgrid-cell {
+    background-color: transparent;
+}
+
+/* example use of styles for your form */
+.my-heading-row {
+    background-color: var(--surface-c);
+    font-weight: bold;
+}
+body {
+    margin:0;
+    padding:0;
+    font-family: Sans-Serif;
+    line-height: 1.5em;
+}
+
+#header {
+    background: #ccc;
+    height: 60px;
+    background-image: URL('../img/blue.png');
+    background-size: 100%,80%;
+}
+
+#header h1 {
+    margin: 0;
+    padding-top: 15px;
+}
+
+main {
+    padding-bottom: 10010px;
+    margin-bottom: -10000px;
+    float: left;
+    width: 100%;
+}
+
+#nav {
+    padding-bottom: 10010px;
+    margin-bottom: -10000px;
+    float: left;
+    width: 290px;
+    margin-left: -100%;
+    background: #eee;
+}
+
+#footer {
+    clear: left;
+    width: 100%;
+    background: #ccc;
+    text-align: center;
+    padding: 4px 0;
+}
+
+#wrapper {
+    overflow: hidden;
+}
+
+#content {
+    margin-left: 290px; /* Same as 'nav' width */
+}
+
+.innertube {
+    margin: 15px; /* Padding for content */
+    margin-top: 0;
+}
+
+p {
+    color: #555;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul a {
+    color: darkgreen;
+    text-decoration: none;
+}
+.container {
+    height: auto;
+    overflow: hidden;
+}
+
+.right {
+    width: 180px;
+    float: right;
+    padding: 20px 0;
+    font-family: fantasy;
+    font-size: 18px;
+}
+
+.left {
+    float: none; /* not needed, just for clarification */
+    /* the next props are meant to keep this block independent from the other floated one */
+    width: auto;
+    overflow: hidden;
+    padding: 20px 0;
+    font-family: fantasy;
+    font-size: 25px;
+}
+
+.footer {
+    float: none; /* not needed, just for clarification */
+    /* the next props are meant to keep this block independent from the other floated one */
+    width: auto;
+    overflow: hidden;
+    font-family: fantasy;
+    font-size: 15px;
+}

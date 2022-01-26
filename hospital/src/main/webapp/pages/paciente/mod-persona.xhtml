@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Hospital</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../template/template.xhtml">
+
+            <ui:define name="content">
+                <br/>
+                <center>
+                    <p:panel header="Modificar Paciente" style="width: 100%;">
+
+                        <h:form id="formConsulta">
+                            <p:fieldset legend="Consulta del Paciente">
+                                <h:panelGrid id="gridConsulta" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtCedula" value="Cedula:" />
+                                    <p:column>
+                                        <p:inputText id="txtCedula" value="#{personaView.personaSearch.cedula}" maxlength="10" 
+                                                     size="15" required="true" label="Cedula">
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                        <p:commandButton update="gridConsulta,confirmDialogwidget,:formModifica:gridModifica" 
+                                                         value="Consultar" actionListener="#{personaView.consultarPersona()}" />
+
+                                    </p:column>
+                                    <p:message for="txtCedula"/>
+
+
+
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{personaView.mensaje.descripcion}" header="#{personaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form> 
+
+
+                        <br/>
+                        <h:form id="formModifica">
+                            <p:fieldset legend="Datos del Paciente">
+                                <h:panelGrid id="gridModifica" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtNombres" value="Nombres:"/>
+                                    <p:inputText id="txtNombres" value="#{personaView.persona.nombres}" maxlength="50" 
+                                                 size="40" required="true" label="Nombres"/>
+                                    <p:message for="txtNombres"/>
+
+                                    <h:outputLabel for="txtFecha" value="Fecha de Nacimiento:"/>
+                                    <p:datePicker id="txtFecha" value="#{personaView.persona.fechaNacimiento}" monthNavigator="true" 
+                                                  yearNavigator="true" locale="es" showIcon="true"
+                                                  required="true" label="Fecha de Nacimiento"/>
+                                    <p:message for="txtFecha"/>
+
+                                    <h:outputLabel for="txtDireccion" value="Dirección:"/>
+                                    <p:inputText id="txtDireccion" value="#{personaView.persona.direccion}" maxlength="50" 
+                                                 size="40" required="true" label="Dirección"/>
+                                    <p:message for="txtDireccion"/>
+
+                                    <h:outputLabel for="txtCorreo" value="Correo Electronico:"/>
+                                    <p:inputText id="txtCorreo" value="#{personaView.persona.correo}" maxlength="50" 
+                                                 size="30" required="true" label="Correo"/>
+                                    <p:message for="txtCorreo"/>
+
+                                    <h:outputLabel for="txtTelefono" value="Telefono:"/>
+                                    <p:inputText id="txtTelefono" value="#{personaView.persona.telefono}" maxlength="10" 
+                                                 size="15" required="true" label="Telefono">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                    <p:message for="txtTelefono"/>
+
+                                    <p:commandButton update="gridModifica, confirmDialogwidget, :formConsulta:gridConsulta" 
+                                                     value="Guardar" actionListener="#{personaView.modificarPersona()}"
+                                                     disabled="#{!personaView.found}"/>
+
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{personaView.mensaje.descripcion}" header="#{personaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </center>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

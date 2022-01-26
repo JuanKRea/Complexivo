@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+   <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Hospital</title>
+
+
+    </h:head>
+    <h:body>
+<script type="text/javascript">
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                millisecondText: 'Milisegundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día',
+                today: 'Hoy',
+                clear: 'Claro'
+            };
+        </script>
+        <header id="header">
+            <div class="innertube">
+                <ui:insert name="top">
+                    <div class="container">
+
+                        <div class="left">
+                            <h:outputText value="SISTEMA HOSPITAL ZONAL DEL ORO"/>
+                        </div>
+                      
+                    </div>
+                </ui:insert>
+            </div>
+        </header>
+        <div id="wrapper">
+            <main>
+                <center>
+                    <br/>
+                    <br/>
+                    <h:form>
+                        <p:panel header="Crear Paciente" style="width: 100%;">
+                            <p:fieldset legend="Datos del Paciente">
+                                <h:panelGrid id="grid" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+                                    <h:outputLabel for="txtCedula" value="Cedula:"/>
+                                    <p:inputText id="txtCedula" value="#{personaView.persona.cedula}" maxlength="10" 
+                                                 size="15" label="Cedula">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+
+                                    <p:message for="txtCedula"/>
+
+                                    <h:outputLabel for="txtNombres" value="Nombres:"/>
+                                    <p:inputText id="txtNombres" value="#{personaView.persona.nombres}" maxlength="50" 
+                                                 size="40"  label="Nombres"/>
+                                    <p:message for="txtNombres"/>
+
+                                    <h:outputLabel for="txtFecha" value="Fecha de Nacimiento:"/>
+                                    <p:datePicker id="txtFecha" value="#{personaView.persona.fechaNacimiento}" monthNavigator="true" 
+                                                  yearNavigator="true" locale="es" showIcon="true" yearRange="1900:2023"
+                                                   label="Fecha de Nacimiento"/>
+                                    <p:message for="txtFecha"/>
+
+                                    <h:outputLabel for="txtDireccion" value="Dirección:"/>
+                                    <p:inputText id="txtDireccion" value="#{personaView.persona.direccion}" maxlength="50" 
+                                                 size="40"  label="Dirección"/>
+                                    <p:message for="txtDireccion"/>
+
+                                    <h:outputLabel for="txtCorreo" value="Correo Electronico:"/>
+                                    <p:inputText id="txtCorreo" value="#{personaView.persona.correo}" maxlength="50" 
+                                                 size="30"  label="Correo"/>
+                                    <p:message for="txtCorreo"/>
+
+                                    <h:outputLabel for="txtTelefono" value="Telefono:"/>
+                                    <p:inputText id="txtTelefono" value="#{personaView.persona.telefono}" maxlength="10" 
+                                                 size="15" label="Telefono">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                    <p:message for="txtTelefono"/>
+
+                                    <p:commandButton update="grid, confirmDialogwidget" value="Guardar" actionListener="#{personaView.crear()}" />
+                                    <p:commandButton id="login" action="#{loginView.logout()}"
+                                                     value="LOGIN"  ajax="true" style="float: right;">
+                                    </p:commandButton>
+                                      
+
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{personaView.mensaje.descripcion}" header="#{personaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </p:panel>
+
+                    </h:form>
+                </center>    
+            </main>
+        </div>
+        <br/>
+        <br/>
+        <footer id="footer">
+            <div class="footer">
+            <h:outputText value="EXAMEN COMPLEXIVO"/>
+        </div>
+        </footer>
+    </h:body>
+</html>

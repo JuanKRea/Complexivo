@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Hospital</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../template/template.xhtml">
+
+            <ui:define name="content">
+                <br/>
+                <center>
+                    <p:panel header="Nueva Cita" style="width: 100%;">
+
+                        <h:form id="formConsulta">
+
+                            <p:fieldset legend="Consulta Cita">
+                                <h:panelGrid id="gridConsulta" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtCita" value="Número Cita:" />
+                                    <p:column>
+                                        <p:inputText id="txtCita" value="#{citaView.citaSearch.idCita}" maxlength="10" 
+                                                     size="15" required="true" label="Número Cita">
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                        <p:commandButton update="gridConsulta,:formModifica" 
+                                                         value="Consultar" actionListener="#{citaView.consultarNumeroCita()}" />
+
+                                    </p:column>
+                                    <p:message for="txtCita"/>
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                        </h:form> 
+
+
+                        <br/>
+                        <h:form id="formModifica">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td width="50%">
+
+                                        <p:fieldset legend="Datos del Paciente">
+                                            <h:panelGrid id="gridModifica" columns="2" cellpadding="7"
+                                                         style="border:0px none; background-color:transparent"
+                                                         columnClasses="col-20, col-20">
+
+                                                <h:outputLabel for="txtNombres" value="Nombres:"/>
+                                                <p:inputText id="txtNombres" value="#{citaView.cita.persona.nombres}" maxlength="50" 
+                                                             size="40" required="true" label="Nombres" readonly="true"/>
+
+                                                <h:outputLabel for="txtFecha" value="Fecha de Nacimiento:"/>
+                                                <p:datePicker id="txtFecha" value="#{citaView.cita.persona.fechaNacimiento}" monthNavigator="true" 
+                                                              yearNavigator="true" locale="es" 
+                                                              required="true" label="Fecha de Nacimiento" disabled="true"/>
+
+                                                <h:outputLabel for="txtDireccion" value="Dirección:"/>
+                                                <p:inputText id="txtDireccion" value="#{citaView.cita.persona.direccion}" maxlength="50" 
+                                                             size="40" required="true" label="Dirección" readonly="true"/>
+
+                                                <h:outputLabel for="txtCorreo" value="Correo Electronico:"/>
+                                                <p:inputText id="txtCorreo" value="#{citaView.cita.persona.correo}" maxlength="50" 
+                                                             size="30" required="true" label="Correo" readonly="true"/>
+
+                                                <h:outputLabel for="txtTelefono" value="Telefono:"/>
+                                                <p:inputText id="txtTelefono" value="#{citaView.cita.persona.telefono}" maxlength="10" 
+                                                             size="15" required="true" label="Telefono" readonly="true">
+                                                    <p:keyFilter mask="num" />
+                                                </p:inputText>
+
+                                            </h:panelGrid>
+                                        </p:fieldset>
+                                    </td>
+                                    <td width="50%">
+
+                                        <p:fieldset legend="Datos de la Cita">
+                                            <h:panelGrid id="gridCita" columns="2" cellpadding="7"
+                                                         style="border:0px none; background-color:transparent;"
+                                                         columnClasses="col-20, col-20">
+                                                <h:outputLabel for="txtNombreMedico" value="Médico:"/>
+                                                <p:inputText id="txtNombreMedico" value="#{citaView.cita.medico.nombre}" maxlength="50" 
+                                                             size="40" required="true" label="Nombres" readonly="true"/>
+
+                                                <h:outputLabel for="txtEspecialidad" value="Especialidad:"/>
+                                                <p:inputText id="txtEspecialidad" value="#{citaView.cita.especialidad.nombre}" maxlength="50" 
+                                                             size="40" required="true" label="Especialidad" readonly="true"/>
+
+                                                <h:outputLabel for="txtFechaCita" value="Fecha Cita:"/>
+                                                <p:inputText id="txtFechaCita" value="#{citaView.cita.fechaCita}"
+                                                             size="10" required="true" label="Fecha" readonly="true"/>
+
+                                                <h:outputLabel for="txtHora" value="Hora Cita:"/>
+                                                <p:inputText id="txtHora" value="#{citaView.cita.horaCita}"
+                                                             size="10" required="true" label="Hora" readonly="true"/>
+                                                <h:outputLabel  value="Estado:"/>
+                                                <p:inputText id="txtEstado" value="#{citaView.cita.estCit}"
+                                                             size="5" required="true" label="Estado" readonly="true"/>
+                                            </h:panelGrid>
+                                        </p:fieldset>
+                                    </td>
+                                </tr>    
+                            </table>
+
+
+                            <br/>
+
+                            <p:fieldset legend="Gestión Cita">
+                                <h:panelGrid id="gridGestion" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent;"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtDiagnostico" value="Diagnóstico:" />
+                                    <p:inputTextarea id="txtDiagnostico" rows="2" cols="33" maxlength="45" 
+                                                     required="true" label="Diagnóstico"
+                                                     value="#{citaView.cita.diagnostico}"/>
+                                    <p:message for="txtDiagnostico"/>
+                                    
+                                    <h:outputLabel for="txtTratamiento" value="Tratamiento:" />
+                                    <p:inputTextarea id="txtTratamiento" rows="2" cols="33" maxlength="45" 
+                                                     required="true" label="Tratamiento"
+                                                     value="#{citaView.cita.tratamiento}"/>
+                                    <p:message for="txtTratamiento"/>
+                                    
+                                    <h:outputLabel for="txtObservacion" value="Observaciones:" />
+                                    <p:inputTextarea id="txtObservacion" rows="2" cols="33" maxlength="45" 
+                                                     required="true" label="Obervaciones"
+                                                     value="#{citaView.cita.observaciones}"/>
+                                    <p:message for="txtObservacion"/>
+                                    
+                                    <p:commandButton update=":formModifica, confirmDialogwidget,:formConsulta" 
+                                                     value="Gestionar Cita" actionListener="#{citaView.gestionarCita()}" 
+                                                     disabled="#{!citaView.found}"/>
+                                </h:panelGrid>
+                            </p:fieldset>
+
+
+
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{citaView.mensaje.descripcion}" header="#{citaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </center>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

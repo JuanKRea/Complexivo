@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Hospital</title>
+    </h:head>
+
+    <h:body>
+
+        <header id="header">
+            <div class="innertube">
+                <ui:insert name="top"><ui:include src="./../template/headerext.xhtml"/></ui:insert>
+            </div>
+        </header>
+
+        <div id="wrapper">
+
+            <main>
+                <div id="content">
+                    <div class="innertube">
+                        <ui:insert name="content"></ui:insert>
+                    </div>
+                </div>
+            </main>
+
+            <nav id="nav">
+                <div class="innertube">
+                    <h3><ui:insert name="left"><ui:include src="./../pages/paciente/crea-personaext.xhtml"/></ui:insert></h3>
+                </div>
+            </nav>
+
+        </div>
+
+        <footer id="footer">
+            <div class="innertube">
+                <p><ui:include src="./../template/footer.xhtml"/></p>
+            </div>
+        </footer>
+
+    </h:body>
+
+</html>

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Hospital</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../template/template.xhtml">
+
+            <ui:define name="content">
+                <br/>
+                <center>
+                    <p:panel header="Asignación Médico - Especialidad" style="width: 100%;">
+
+                        <h:form id="formConsulta">
+                            <p:fieldset legend="Consulta Médico">
+                                <h:panelGrid id="gridConsulta" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtCedula" value="Identificación Médico:" />
+                                    <p:column>
+                                        <p:inputText id="txtCedula" value="#{medicoEspecialidadView.medicoSearch.idmedico}" maxlength="10" 
+                                                     size="15" required="true" label="Identificación">
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                        <p:commandButton update="gridConsulta,confirmDialogwidget,:formModifica" 
+                                                         value="Consultar" actionListener="#{medicoEspecialidadView.consultarMedico()}" />
+
+                                    </p:column>
+                                    <p:message for="txtCedula"/>
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{medicoEspecialidadView.mensaje.descripcion}" header="#{medicoEspecialidadView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form> 
+
+
+                        <br/>
+                        <h:form id="formModifica">
+                            <p:fieldset legend="Datos del Médico">
+                                <h:panelGrid id="gridModifica" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+
+                                    <h:outputLabel for="txtNombres" value="Nombres:"/>
+                                    <p:inputText id="txtNombres" value="#{medicoEspecialidadView.medico.nombre}" maxlength="45" 
+                                                 size="40" required="true" label="Nombres" readonly="true"/>
+                                    <p:message for="txtNombres"/>
+
+                                    <h:outputLabel for="txtCorreo" value="Correo Electrónico:"/>
+                                    <p:inputText id="txtCorreo" value="#{medicoEspecialidadView.medico.correo}" maxlength="45" 
+                                                 size="30" required="true" label="Correo" readonly="true"/>
+                                    <p:message for="txtCorreo"/>
+
+                                    <h:outputLabel for="txtTelefono" value="Teléfono:"/>
+                                    <p:inputText id="txtTelefono" value="#{medicoEspecialidadView.medico.telefono}" maxlength="10" 
+                                                 size="15" required="true" label="Telefono" readonly="true">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                    <p:message for="txtTelefono"/>
+
+
+
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <br/>
+                            <p:fieldset legend="Asignación de Especialidades">
+                                <h:panelGrid id="gridEspecilidades" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+                                    <h:outputLabel for="instantPickList" value="" />
+                                    <p:pickList id="instantPickList" value="#{medicoEspecialidadView.especialidades}"
+                                                var="especialidad" itemLabel="#{especialidad.nombre}" itemValue="#{especialidad}" converter="especialidadConverter"
+                                                showCheckbox="true" label="Asignación" />
+                                    <p:message for="instantPickList"/>
+                                    <br/>
+                                    <p:commandButton update="gridModifica,gridEspecilidades, confirmDialogwidget, :formConsulta:gridConsulta" 
+                                                     value="Asignar" actionListener="#{medicoEspecialidadView.asignarEspecilidades()}"
+                                                     disabled="#{!medicoEspecialidadView.found}"/>
+                                </h:panelGrid>
+
+                            </p:fieldset>
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{medicoEspecialidadView.mensaje.descripcion}" header="#{medicoEspecialidadView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </center>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

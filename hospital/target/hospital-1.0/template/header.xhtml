@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="right">
+                
+                <h:form id="formSalir">
+                     
+                    <h:outputText value="#{loginView.userName} | "/>
+                    <p:commandLink id="salir" action="#{loginView.logout()}" ajax="false">
+                        <p:graphicImage name="img/cerrar.png" width="15px" height="15px"/><h:outputText value="Salir" style="font-size: 13px"/>
+                    </p:commandLink>
+                </h:form>
+            </div>
+            <div class="left">
+                <h:outputText value="SISTEMA HOSPITAL ZONAL DEL ORO"/>
+            </div>
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Hospital</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../template/template.xhtml">
+
+            <ui:define name="content">
+                <br/>
+                <center>
+                    <h:form id="formMedico">
+                        <p:panel header="Consulta Médicos" style="width: 100%;">
+                            <br/>
+                            <p:commandButton update="tablaMedicos" value="Consultar" actionListener="#{medicoView.consultarAllMedico()}" />
+                            <br/>
+                            <br/>
+                            <p:dataTable id="tablaMedicos" var="listMedico" value="#{medicoView.listMedico}" rows="10"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                         rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+
+                                <p:column headerText="Identificación">
+                                    <h:outputText value="#{listMedico.idmedico}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{listMedico.nombre}" />
+                                </p:column>
+                                
+                                <p:column headerText="Correo">
+                                    <h:outputText value="#{listMedico.correo}" />
+                                </p:column>
+                                
+                                <p:column headerText="Telefono">
+                                    <h:outputText value="#{listMedico.telefono}" />
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </center>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+
