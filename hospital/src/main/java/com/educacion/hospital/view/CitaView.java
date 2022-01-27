@@ -58,6 +58,7 @@ public class CitaView implements Serializable {
         cita = new Cita();
         citaSearch = new Cita();
         citaDao = new CitaDao();
+        
     }
 
     public void consultarPersona() {

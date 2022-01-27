@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -92,7 +93,42 @@
                                     </p:inputText>
                                     <p:message for="txtTelefono"/>
 
-                                    <p:commandButton update="grid, confirmDialogwidget" value="Guardar" actionListener="#{personaView.crear()}" />
+                                    <h:outputLabel for="selectGenero" value="Genero:"/>
+                                    <p:selectOneMenu id="selectGenero" value="#{personaView.generoSelected}"
+                                                     effect="fade" var="e" converter="generoConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Genero">
+                                        
+                                        <f:selectItems value="#{personaView.listGenero}" var="genero"
+                                                       itemLabel="#{genero.genero}" itemValue="#{genero}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Genero"/>
+                                            </f:facet>
+                                            <h:outputText value="#{e.genero}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectGenero"/>
+                                    
+                                    <h:outputLabel for="selectCiudad" value="Ciudad:"/>
+                                    <p:selectOneMenu id="selectCiudad" value="#{personaView.ciudadSelected}"
+                                                     effect="fade" var="m" converter="ciudadConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Ciudad">
+                                        
+                                        <f:selectItems value="#{personaView.listCiudad}" var="ciudad"
+                                                       itemLabel="#{ciudad.ciudad}" itemValue="#{ciudad}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Ciudad"/>
+                                            </f:facet>
+                                            <h:outputText value="#{m.ciudad}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectCiudad"/>
+                                    
+                                    
+                                    <p:commandButton update="grid, confirmDialogwidget" value="Guardar" actionListener="#{personaView.crearPersona()}" />
 
                                 </h:panelGrid>
                             </p:fieldset>

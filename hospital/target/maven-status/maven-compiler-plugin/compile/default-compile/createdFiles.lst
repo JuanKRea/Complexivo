@@ -1,12 +1,15 @@
+com\educacion\hospital\dao\GeneroDao.class
 com\educacion\hospital\dao\MedicoDao.class
 com\educacion\hospital\exception\TransaccionExcepcion.class
 com\educacion\hospital\view\UsuarioView.class
+com\educacion\hospital\model\Ciudad.class
 com\educacion\hospital\view\RolView.class
 com\educacion\hospital\model\Cita.class
 com\educacion\hospital\model\Persona.class
 com\educacion\hospital\view\LoginView.class
 com\educacion\hospital\model\Especialidad.class
 com\educacion\hospital\view\EspecialidadView.class
+com\educacion\hospital\util\GeneroConverter.class
 com\educacion\hospital\dao\UsuarioDao.class
 com\educacion\hospital\model\Medico.class
 com\educacion\hospital\dto\Mensaje.class
@@ -17,6 +20,7 @@ com\educacion\hospital\util\Util.class
 com\educacion\hospital\view\MedicoView.class
 com\educacion\hospital\dao\MedicoEspecialidadDao.class
 com\educacion\hospital\dao\CitaDao.class
+com\educacion\hospital\dao\CiudadDao.class
 com\educacion\hospital\model\MedicoEspecialidadPK.class
 com\educacion\hospital\util\AuthFilter.class
 com\educacion\hospital\dao\PersonaDao.class
@@ -28,6 +32,8 @@ com\educacion\hospital\util\MedicoConverter.class
 com\educacion\hospital\model\MedicoEspecialidad.class
 com\educacion\hospital\model\Rol.class
 com\educacion\hospital\view\HistorialView.class
+com\educacion\hospital\util\CiudadConverter.class
+com\educacion\hospital\model\Genero.class
 com\educacion\hospital\view\PersonaView.class
 com\educacion\hospital\model\Usuario.class
 com\educacion\hospital\view\CitaView.class

@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,6 +31,13 @@ public class Persona implements Serializable {
     private String correo;
     @Column(name = "num_tel")
     private String telefono;
+   
+     
+    @ManyToOne
+    private Genero genero;
+    
+    @ManyToOne
+    private Ciudad ciudad;
 
     public String getCedula() {
         return cedula;
@@ -77,6 +85,22 @@ public class Persona implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
     }
 
 }
