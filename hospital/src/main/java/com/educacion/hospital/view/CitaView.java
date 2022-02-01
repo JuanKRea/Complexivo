@@ -10,6 +10,14 @@ import com.educacion.hospital.model.Cita;
 import com.educacion.hospital.model.Especialidad;
 import com.educacion.hospital.model.Medico;
 import com.educacion.hospital.model.Persona;
+import com.educacion.hospital.model.Medicamento;
+import com.educacion.hospital.dao.MedicamentoDao;
+import com.educacion.hospital.model.Examen;
+import com.educacion.hospital.dao.ExamenDao;
+import com.educacion.hospital.model.CitaMedicamento;
+import com.educacion.hospital.model.CitaMedicamentoPK;
+import com.educacion.hospital.dao.CitaMedicamentoDao;
+
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -43,6 +51,16 @@ public class CitaView implements Serializable {
     private Cita citaSearch;
     private Date horaCit;
     private boolean found;
+    private Medicamento medicamentoSelected;
+    private List<Medicamento> listMedicamento;
+    private MedicamentoDao medicamentoDao;
+    private Examen examenSelected;
+    private List<Examen> listExamen;
+    private ExamenDao examenDao;
+    
+    private CitaMedicamentoPK receta;
+    private List<CitaMedicamento> listReceta;
+    private CitaMedicamentoDao recetaDao;
 
     public CitaView() {
         persona = new Persona();
@@ -55,15 +73,27 @@ public class CitaView implements Serializable {
         especialidadSelected = new Especialidad();
         listEspecialidad = new ArrayList<>();
         especialidadDao = new EspecialidadDao();
+        medicamentoSelected = new Medicamento();
+        listMedicamento = new ArrayList<>();
+        medicamentoDao = new MedicamentoDao();
+        examenSelected = new Examen();
+        listExamen = new ArrayList<>();
+        examenDao = new ExamenDao();
+        receta= new CitaMedicamentoPK();
+        listReceta=new ArrayList<>();
+        recetaDao= new CitaMedicamentoDao();
         cita = new Cita();
         citaSearch = new Cita();
         citaDao = new CitaDao();
-        
+        this.consultarAllMedicamento();
+        this.consultarAllExamen();
+      
     }
 
     public void consultarPersona() {
         try {
             this.persona = personaDao.obtener(personaSearch.getCedula());
+            
             if (null == this.persona) {
                 this.persona = new Persona();
                 this.personaSearch = new Persona();
@@ -78,6 +108,7 @@ public class CitaView implements Serializable {
             } else {
                 this.found = true;
                 this.consultarAllEspecialidad();
+                  this.consultarRecetabyCita();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -126,7 +157,27 @@ public void consultarAllEspecialidad() {
         }
     }
 
-    
+     public void consultarAllMedicamento() {
+        try {
+            this.listMedicamento= medicamentoDao.obtenerMedicamento();
+            if (null != this.listMedicamento) {
+                this.medicamentoSelected = this.listMedicamento.get(0);
+                            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+     
+    public void consultarAllExamen() {
+        try {
+            this.listExamen= examenDao.obtenerExamen();
+            if (null != this.listExamen) {
+                this.examenSelected = this.listExamen.get(0);
+                            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     public void crearCita() {
         try {
             Integer lastId = citaDao.getLastIdCita();
@@ -192,7 +243,42 @@ public void consultarAllEspecialidad() {
             ex.printStackTrace();
         }
     }
-
+    
+      public void agregarMedicamento() {
+        try {
+                    receta.setIdCita(this.cita.getIdCita());
+                    receta.setIdMedicamento(this.medicamentoSelected.getIdmedica());
+                    CitaMedicamento citaMed = new CitaMedicamento();
+                    citaMed.setId(receta);
+                    recetaDao.crear(citaMed);
+            
+            mostarConfirmacion("Receta", "Añadido");
+        } catch (Exception ex) {
+            mostarConfirmacion("Citas", "Error al gestionar Cita " + ex.getCause().getMessage());
+            ex.printStackTrace();
+        this.receta=new CitaMedicamentoPK();
+        this.recetaDao= new CitaMedicamentoDao();
+        }
+    }
+  public void cargarReceta() {
+        try {
+            this.consultarRecetabyCita();     
+            } catch (Exception ex) {
+            mostarConfirmacion("Citas", "Error a consultar " + ex.getCause().getMessage());
+            ex.printStackTrace();
+        }
+        }
+       public void consultarRecetabyCita() {
+        try {
+            this.listReceta = recetaDao.obtenerRecetabyCita(this.cita.getIdCita());
+            
+      //this.listCita = citaDao.obtenerCitasbyPaciente(idPaciente);
+            
+        } catch (Exception ex) {
+            mostarConfirmacion("Citas", "Error a consultar " + ex.getCause().getMessage());
+            ex.printStackTrace();
+        }
+    }
     public void mostarConfirmacion(String header, String descripcion) {
         mensaje = new Mensaje();
         mensaje.setHeader(header);
@@ -304,4 +390,109 @@ public void consultarAllEspecialidad() {
         this.citaSearch = citaSearch;
     }
 
+    public PersonaDao getPersonaDao() {
+        return personaDao;
+    }
+
+    public void setPersonaDao(PersonaDao personaDao) {
+        this.personaDao = personaDao;
+    }
+
+    public MedicoDao getMedicoDao() {
+        return medicoDao;
+    }
+
+    public void setMedicoDao(MedicoDao medicoDao) {
+        this.medicoDao = medicoDao;
+    }
+
+    public EspecialidadDao getEspecialidadDao() {
+        return especialidadDao;
+    }
+
+    public void setEspecialidadDao(EspecialidadDao especialidadDao) {
+        this.especialidadDao = especialidadDao;
+    }
+
+    public CitaDao getCitaDao() {
+        return citaDao;
+    }
+
+    public void setCitaDao(CitaDao citaDao) {
+        this.citaDao = citaDao;
+    }
+
+    public Medicamento getMedicamentoSelected() {
+        return medicamentoSelected;
+    }
+
+    public void setMedicamentoSelected(Medicamento medicamentoSelected) {
+        this.medicamentoSelected = medicamentoSelected;
+    }
+
+    public List<Medicamento> getListMedicamento() {
+        return listMedicamento;
+    }
+
+    public void setListMedicamento(List<Medicamento> listMedicamento) {
+        this.listMedicamento = listMedicamento;
+    }
+
+    public MedicamentoDao getMedicamentoDao() {
+        return medicamentoDao;
+    }
+
+    public void setMedicamentoDao(MedicamentoDao medicamentoDao) {
+        this.medicamentoDao = medicamentoDao;
+    }
+
+    public CitaMedicamentoPK getReceta() {
+        return receta;
+    }
+
+    public void setReceta(CitaMedicamentoPK receta) {
+        this.receta = receta;
+    }
+
+    public List<CitaMedicamento> getListReceta() {
+        return listReceta;
+    }
+
+    public void setListReceta(List<CitaMedicamento> listReceta) {
+        this.listReceta = listReceta;
+    }
+
+    public CitaMedicamentoDao getRecetaDao() {
+        return recetaDao;
+    }
+
+    public void setRecetaDao(CitaMedicamentoDao recetaDao) {
+        this.recetaDao = recetaDao;
+    }
+
+    public Examen getExamenSelected() {
+        return examenSelected;
+    }
+
+    public void setExamenSelected(Examen examenSelected) {
+        this.examenSelected = examenSelected;
+    }
+
+    public List<Examen> getListExamen() {
+        return listExamen;
+    }
+
+    public void setListExamen(List<Examen> listExamen) {
+        this.listExamen = listExamen;
+    }
+
+    public ExamenDao getExamenDao() {
+        return examenDao;
+    }
+
+    public void setExamenDao(ExamenDao examenDao) {
+        this.examenDao = examenDao;
+    }
+
+    
 }

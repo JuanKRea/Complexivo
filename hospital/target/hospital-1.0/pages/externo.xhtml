@@ -68,12 +68,12 @@
                         <p:panel header="Crear Paciente" style="width: 100%;">
                             <p:fieldset legend="Datos del Paciente" style="width: 100%;">
                                 <h:panelGrid id="grid" columns="3" cellpadding="10"
-                                             style="border:0px none; background-color:transparent; width: 80%"
-                                             columnClasses="col-20, col-30, col-40" border="1">
+                                             style="border:0px none; background-color:transparent; width: 50%"
+                                             columnClasses="col-20, col-30, col-40" >
                                     
                                     <h:outputLabel for="txtCedula" value="Cedula:"/>
                                     <p:inputText id="txtCedula" value="#{personaView.persona.cedula}" maxlength="10" 
-                                                 size="15" label="Cedula">
+                                                 size="15" label="Cedula" >
                                         <p:keyFilter mask="num" />
                                     </p:inputText>
                                     <p:message for="txtCedula"/>
@@ -142,9 +142,9 @@
                                     </p:selectOneMenu>
                                     <p:message for="selectCiudad"/>
 
-                                    <p:commandButton update="grid, confirmDialogwidget" value="Guardar" actionListener="#{personaView.crear()}" />
+                                    <p:commandButton update="grid, confirmDialogwidget" value="Guardar" actionListener="#{personaView.crear()}" style="float: right;"/>
                                     <p:commandButton id="login" action="#{loginView.logout()}"
-                                                     value="LOGIN"  ajax="true" >
+                                                     value="LOGIN"  ajax="true" style="float: right;">
                                     </p:commandButton>
                                       
 

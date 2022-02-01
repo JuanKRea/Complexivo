@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Hospital</title>
+    </h:head>
+    <h:body>
+
+        <ui:composition template="./../../template/templatepaciente.xhtml">
+
+            <ui:define name="content">
+                <br/>
+                <center>
+                    <p:panel header="Nueva Cita" style="width: 100%;">
+
+                        <h:form id="formConsulta">
+
+                            <p:fieldset legend="Consulta del Paciente">
+                                <h:panelGrid id="gridConsulta" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtCedula" value="Cédula Paciente:" />
+                                    <p:column>
+                                        <p:inputText id="txtCedula" value="#{citaView.personaSearch.cedula}" maxlength="10" 
+                                                     size="15" required="true" label="Cédula Paciente">
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                        <p:commandButton update="gridConsulta,:formModifica" 
+                                                         value="Consultar" actionListener="#{citaView.consultarPersona()}" />
+
+                                    </p:column>
+                                    <p:message for="txtCedula"/>
+                                </h:panelGrid>
+                            </p:fieldset>
+
+                        </h:form> 
+
+
+                        <br/>
+                        <h:form id="formModifica">
+
+                            <p:fieldset legend="Datos del Paciente" style="width: 100%">
+                                <h:panelGrid id="gridModifica" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+
+                                    <h:outputLabel for="txtNombres" value="Nombres:"/>
+                                    <p:inputText id="txtNombres" value="#{citaView.persona.nombres}" maxlength="50" 
+                                                 size="40" required="true" label="Nombres" readonly="true"/>
+                                    <p:message for="txtNombres"/>
+
+                                    <h:outputLabel for="txtFecha" value="Fecha de Nacimiento:"/>
+                                    <p:datePicker id="txtFecha" value="#{citaView.persona.fechaNacimiento}" monthNavigator="true" 
+                                                  yearNavigator="true" locale="es" 
+                                                  required="true" label="Fecha de Nacimiento" disabled="true"/>
+                                    <p:message for="txtFecha"/>
+
+                                    <h:outputLabel for="txtDireccion" value="Dirección:"/>
+                                    <p:inputText id="txtDireccion" value="#{citaView.persona.direccion}" maxlength="50" 
+                                                 size="40" required="true" label="Dirección" readonly="true"/>
+                                    <p:message for="txtDireccion"/>
+
+                                    <h:outputLabel for="txtCorreo" value="Correo Electronico:"/>
+                                    <p:inputText id="txtCorreo" value="#{citaView.persona.correo}" maxlength="50" 
+                                                 size="30" required="true" label="Correo" readonly="true"/>
+                                    <p:message for="txtCorreo"/>
+
+                                    <h:outputLabel for="txtTelefono" value="Telefono:"/>
+                                    <p:inputText id="txtTelefono" value="#{citaView.persona.telefono}" maxlength="10" 
+                                                 size="15" required="true" label="Telefono" readonly="true">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+                                    <p:message for="txtTelefono"/>
+
+                                </h:panelGrid>
+                            </p:fieldset>
+                            <br/>
+
+                            <p:fieldset legend="Datos de la Cita" style="width: 100%">
+                                <h:panelGrid id="gridCita" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+                                    
+                                     <h:outputLabel for="selectEspecialidad" value="Especialidad:"/>
+                                    <p:selectOneMenu id="selectEspecialidad" value="#{citaView.especialidadSelected}"
+                                                     effect="fade" var="e" converter="especialidadConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Especialidad">
+                                        <p:ajax update="selectMedico" event="change"  listener="#{citaView.cargarMedico()}" process="selectEspecialidad"/>
+                                        <f:selectItems value="#{citaView.listEspecialidad}" var="especialidad"
+                                                       itemLabel="#{especialidad.nombre}" itemValue="#{especialidad}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{e.nombre}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectEspecialidad"/>
+                                    
+                                    <h:outputLabel for="selectMedico" value="Médico:"/>
+                                    <p:selectOneMenu id="selectMedico" value="#{citaView.medicoSelected}"
+                                                     effect="fade" var="m" converter="medicoConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Médico">
+                                        
+                                        <f:selectItems value="#{citaView.listMedico}" var="medicos"
+                                                       itemLabel="#{medicos.nombre}" itemValue="#{medicos}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre"/>
+                                            </f:facet>
+                                            <h:outputText value="#{m.nombre}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectMedico"/>
+
+                                   
+                                    
+                                    <h:outputLabel for="txtFechaCita" value="Fecha Cita:"/>
+                                    <p:datePicker id="txtFechaCita" value="#{citaView.cita.fechaCita}" monthNavigator="true" 
+                                                  yearNavigator="true" locale="es" showIcon="true"
+                                                  required="true" label="Fecha Cita"/>
+                                    <p:message for="txtFechaCita"/>
+                                    
+                                    <h:outputLabel for="txtHora" value="Hora Cita:"/>
+                                    <p:datePicker id="txtHora" value="#{citaView.horaCit}" monthNavigator="true" 
+                                                  timeOnly="true" pattern="HH:mm"
+                                                  required="true" label="Hora Cita"/>
+                                    <p:message for="txtHora"/>
+                                    
+                                    <p:commandButton update=":formModifica, confirmDialogwidget,:formConsulta" 
+                                                     value="Crear Cita" actionListener="#{citaView.crearCita()}" />
+                                </h:panelGrid>
+                            </p:fieldset>
+
+
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{citaView.mensaje.descripcion}" header="#{citaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form>
+                    </p:panel>
+                </center>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

@@ -32,7 +32,7 @@
                                                      size="15" required="true" label="Número Cita">
                                             <p:keyFilter mask="num" />
                                         </p:inputText>
-                                        <p:commandButton update="gridConsulta,:formModifica" 
+                                        <p:commandButton update="gridConsulta,:formModifica,:formReceta" 
                                                          value="Consultar" actionListener="#{citaView.consultarNumeroCita()}" />
 
                                     </p:column>
@@ -136,13 +136,104 @@
                                                      value="#{citaView.cita.observaciones}"/>
                                     <p:message for="txtObservacion"/>
                                     
-                                    <p:commandButton update=":formModifica, confirmDialogwidget,:formConsulta" 
+                                    <p:commandButton update=":formModifica, confirmDialogwidget,:formConsulta,:formReceta" 
                                                      value="Gestionar Cita" actionListener="#{citaView.gestionarCita()}" 
                                                      disabled="#{!citaView.found}"/>
                                 </h:panelGrid>
                             </p:fieldset>
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{citaView.mensaje.descripcion}" header="#{citaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form> 
+                        <br/>
+                        <h:form id="formReceta"> 
+                            <table style="width: 100%">
+                                <tr>
+                                    <td width="50%">
+                               <p:fieldset legend="Receta">
+                                <h:panelGrid id="gridReceta" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+                                    
+                                    <h:outputLabel for="selectMedicamento" value="Medicamento:"/>
+                                    <p:selectOneMenu id="selectMedicamento" value="#{citaView.medicamentoSelected}"
+                                                     effect="fade" var="m" converter="medicamentoConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Medicamento">
+                                        
+                                        <f:selectItems value="#{citaView.listMedicamento}" var="medicamento"
+                                                       itemLabel="#{medicamento.medicamento}" itemValue="#{medicamento}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Medicamento"/>
+                                            </f:facet>
+                                            <h:outputText value="#{m.medicamento}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectMedicamento"/>
+                                                                                                
+                                                                      
+                                    <h:outputLabel for="txtCantidad" value="Cantidad:"/>
+                                    <p:inputText id="txtCantidad" value="#{citaView.receta.cantidad}" maxlength="10" 
+                                                 size="15" required="true" label="Cantidad">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+
+                                    <p:message for="txtCantidad"/>
+
+                                    <h:outputLabel for="txtDetalle" value="Detalle:"/>
+                                    <p:inputText id="txtDetalle" value="#{citaView.receta.detalle}" maxlength="50" 
+                                                 size="40" required="true" label="Detalle"/>
+                                    <p:message for="txtDetalle"/>
+                                                           
+                                    <p:commandButton update=":formReceta,confirmDialogwidget,:formModifica" value="Agregar Medicamento" actionListener="#{citaView.agregarMedicamento()}" 
+                                                     disabled="#{!citaView.found}"/>
+                                    
+
+                                </h:panelGrid>
+
+                            </p:fieldset>
+                                        </td>
+                                    <td width="50%">
+                                     <p:fieldset legend="Receta">
+                                    <p:commandButton  value="refrescar" actionListener="#{citaView.cargarReceta()}" 
+                                                     disabled="#{!citaView.found}"/>
+                                <p:dataTable id="tablaReceta" var="listReceta" value="#{citaView.listReceta}" rows="10"
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                             rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+
+                                    <p:column headerText="Medicamento">
+                                        <h:outputText value="#{listReceta.idMedicamento}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cantidad">
+                                        <h:outputText value="#{listReceta.cantidad}" />
+                                    </p:column>
+
+                                    <p:column headerText="Detalle">
+                                        <h:outputText value="#{listReceta.detalle}" />
+                                    </p:column>
+
+                                    
+                                    
 
 
+                                </p:dataTable>
+                                </p:fieldset>   
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </td>
+                                </tr>
+                    </table>
 
 
                             <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
@@ -152,6 +243,108 @@
                                 <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                             </p:confirmDialog>
                         </h:form>
+                        
+                        <h:form id="formExamen"> 
+                            <table style="width: 100%">
+                                <tr>
+                                    <td width="50%">
+                               <p:fieldset legend="Examen">
+                                <h:panelGrid id="gridExamen" columns="3" cellpadding="7"
+                                             style="border:0px none; background-color:transparent; width: 80%"
+                                             columnClasses="col-20, col-30, col-40">
+                                    
+                                    <h:outputLabel for="selectExamen" value="Examen:"/>
+                                    <p:selectOneMenu id="selectExamen" value="#{citaView.examenSelected}"
+                                                     effect="fade" var="e" converter="examenConverter" style="width: 250px"
+                                                     filter="true" filterMatchMode="startsWith" required="true" label="Examen">
+                                        
+                                        <f:selectItems value="#{citaView.listExamen}" var="examen"
+                                                       itemLabel="#{examen.examen}" itemValue="#{examen}"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Examen"/>
+                                            </f:facet>
+                                            <h:outputText value="#{e.examen}"/>
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+                                    <p:message for="selectExamen"/>
+                                                                                                
+                                                                      
+                                    <h:outputLabel for="txtCantidad" value="Cantidad:"/>
+                                    <p:inputText id="txtCantidad" value=" " maxlength="10" 
+                                                 size="15" required="true" label="Cantidad">
+                                        <p:keyFilter mask="num" />
+                                    </p:inputText>
+
+                                    <p:message for="txtCantidad"/>
+
+                                    <h:outputLabel for="txtDetalle" value="Detalle:"/>
+                                    <p:inputText id="txtDetalle" value=" " maxlength="50" 
+                                                 size="40" required="true" label="Detalle"/>
+                                    <p:message for="txtDetalle"/>
+                                                           
+                                    <p:commandButton update=":formExamen,confirmDialogwidget" value="Agregar Examen" actionListener="#{citaView.agregarMedicamento()}" 
+                                                     disabled="#{!citaView.found}"/>
+                                    
+
+                                </h:panelGrid>
+
+                            </p:fieldset>
+                                        </td>
+                                    <td width="50%">
+                                     <p:fieldset legend="Examenes">
+                                    <p:commandButton  value="refrescar" actionListener="#{citaView.cargarReceta()}" 
+                                                     disabled="#{!citaView.found}"/>
+                                <p:dataTable id="tablaReceta" var="listReceta" value="#{citaView.listReceta}" rows="10"
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                             rowsPerPageTemplate="5,10,{ShowAll|'All'}">
+
+                                    <p:column headerText="Medicamento">
+                                        <h:outputText value="#{listReceta.idMedicamento}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cantidad">
+                                        <h:outputText value="#{listReceta.cantidad}" />
+                                    </p:column>
+
+                                    <p:column headerText="Detalle">
+                                        <h:outputText value="#{listReceta.detalle}" />
+                                    </p:column>
+
+                                    
+                                    
+
+
+                                </p:dataTable>
+                                </p:fieldset>   
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </td>
+                                </tr>
+                    </table>
+
+
+                            <p:confirmDialog id="confirmDialogwidget" widgetVar="confirmDialogwidget" global="true" 
+                                             showEffect="fade" hideEffect="fade" responsive="true"
+                                             message="#{citaView.mensaje.descripcion}" header="#{citaView.mensaje.header}"
+                                             severity="alert">
+                                <p:commandButton value="Aceptar" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </h:form>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     </p:panel>
                 </center>
 
