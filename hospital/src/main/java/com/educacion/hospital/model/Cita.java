@@ -56,6 +56,7 @@ public class Cita implements Serializable {
     @ManyToOne
     private Persona persona;
 
+    
     //bi-directional many-to-one association to Usuario
     //@ManyToOne
     //private Usuario usuario;

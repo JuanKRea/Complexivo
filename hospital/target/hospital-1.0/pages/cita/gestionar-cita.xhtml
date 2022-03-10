@@ -177,7 +177,7 @@
                                                                                                 
                                                                       
                                     <h:outputLabel for="txtCantidad" value="Cantidad:"/>
-                                    <p:inputText id="txtCantidad" value="#{citaView.receta.cantidad}" maxlength="10" 
+                                    <p:inputText id="txtCantidad" value="#{citaView.citaMed.cantidad}" maxlength="10" 
                                                  size="15" required="true" label="Cantidad">
                                         <p:keyFilter mask="num" />
                                     </p:inputText>
@@ -185,7 +185,7 @@
                                     <p:message for="txtCantidad"/>
 
                                     <h:outputLabel for="txtDetalle" value="Detalle:"/>
-                                    <p:inputText id="txtDetalle" value="#{citaView.receta.detalle}" maxlength="50" 
+                                    <p:inputText id="txtDetalle" value="#{citaView.citaMed.detalle}" maxlength="50" 
                                                  size="40" required="true" label="Detalle"/>
                                     <p:message for="txtDetalle"/>
                                                            
@@ -199,7 +199,7 @@
                                         </td>
                                     <td width="50%">
                                      <p:fieldset legend="Receta">
-                                    <p:commandButton  value="refrescar" actionListener="#{citaView.cargarReceta()}" 
+                                         <p:commandButton  value="refrescar" actionListener="#{citaView.cargarReceta()}" process="@this" update="tablaReceta"
                                                      disabled="#{!citaView.found}"/>
                                 <p:dataTable id="tablaReceta" var="listReceta" value="#{citaView.listReceta}" rows="10"
                                              paginator="true"
@@ -209,7 +209,7 @@
                                              rowsPerPageTemplate="5,10,{ShowAll|'All'}">
 
                                     <p:column headerText="Medicamento">
-                                        <h:outputText value="#{listReceta.idMedicamento}" />
+                                        <h:outputText value="#{listReceta.id.idMedicamento}" />
                                     </p:column>
 
                                     <p:column headerText="Cantidad">
@@ -284,7 +284,7 @@
                                                  size="40" required="true" label="Detalle"/>
                                     <p:message for="txtDetalle"/>
                                                            
-                                    <p:commandButton update=":formExamen,confirmDialogwidget" value="Agregar Examen" actionListener="#{citaView.agregarMedicamento()}" 
+                                    <p:commandButton update=":formExamen,:formReceta,confirmDialogwidget,:formModifica" value="Agregar Examen" actionListener="#{citaView.agregarMedicamento()}" 
                                                      disabled="#{!citaView.found}"/>
                                     
 

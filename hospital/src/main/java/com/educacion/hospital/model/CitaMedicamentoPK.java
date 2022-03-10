@@ -16,12 +16,7 @@ public class CitaMedicamentoPK implements Serializable {
     @Column(name = "medicamento_idmedicamento")
     private Integer idMedicamento;
 
-    @Column(name = "cantidad")
-    private Integer cantidad;
-    
-    @Column(name = "detalle")
-    private String detalle;
-
+ 
     public Integer getIdCita() {
         return idCita;
     }
@@ -30,22 +25,7 @@ public class CitaMedicamentoPK implements Serializable {
         this.idCita = idCita;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public String getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
-    }
-    
+       
 
     public Integer getIdMedicamento() {
         return idMedicamento;

@@ -22,7 +22,8 @@ public class CitaMedicamentoDao extends GenericoDao<CitaMedicamento, CitaMedicam
         return true;
     }
 public List<CitaMedicamento> obtenerRecetabyCita(Integer idCita) throws TransaccionExcepcion {
-         StringBuilder sql = new StringBuilder("SELECT m FROM CitaMedicamento m ");
+    System.out.println(idCita);
+    StringBuilder sql = new StringBuilder("SELECT m FROM CitaMedicamento m ");
         sql.append("WHERE m.id.idCita=:idCita");
          //sql.append("WHERE p.idCita IN (SELECT m.idCita FROM CitaMedicamento m WHERE m.idCita=:idCita)");
         Query query = this.em.createQuery(sql.toString());

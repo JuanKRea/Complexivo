@@ -58,9 +58,10 @@ public class CitaView implements Serializable {
     private List<Examen> listExamen;
     private ExamenDao examenDao;
     
-    private CitaMedicamentoPK receta;
+    private CitaMedicamento receta;
     private List<CitaMedicamento> listReceta;
     private CitaMedicamentoDao recetaDao;
+    private CitaMedicamento citaMed;
 
     public CitaView() {
         persona = new Persona();
@@ -79,12 +80,13 @@ public class CitaView implements Serializable {
         examenSelected = new Examen();
         listExamen = new ArrayList<>();
         examenDao = new ExamenDao();
-        receta= new CitaMedicamentoPK();
+        receta= new CitaMedicamento();
         listReceta=new ArrayList<>();
         recetaDao= new CitaMedicamentoDao();
         cita = new Cita();
         citaSearch = new Cita();
         citaDao = new CitaDao();
+        citaMed = new CitaMedicamento();
         this.consultarAllMedicamento();
         this.consultarAllExamen();
       
@@ -246,23 +248,27 @@ public void consultarAllEspecialidad() {
     
       public void agregarMedicamento() {
         try {
-                    receta.setIdCita(this.cita.getIdCita());
-                    receta.setIdMedicamento(this.medicamentoSelected.getIdmedica());
-                    CitaMedicamento citaMed = new CitaMedicamento();
-                    citaMed.setId(receta);
+            CitaMedicamentoPK PK=new CitaMedicamentoPK();
+            PK.setIdCita(this.cita.getIdCita());
+            PK.setIdMedicamento(this.medicamentoSelected.getIdmedica());
+            
+               
+                    citaMed.setId(PK);
                     recetaDao.crear(citaMed);
             
             mostarConfirmacion("Receta", "Añadido");
         } catch (Exception ex) {
             mostarConfirmacion("Citas", "Error al gestionar Cita " + ex.getCause().getMessage());
             ex.printStackTrace();
-        this.receta=new CitaMedicamentoPK();
+        
         this.recetaDao= new CitaMedicamentoDao();
         }
     }
   public void cargarReceta() {
         try {
-            this.consultarRecetabyCita();     
+            System.out.println("fffffffff");
+            this.consultarRecetabyCita();  
+            
             } catch (Exception ex) {
             mostarConfirmacion("Citas", "Error a consultar " + ex.getCause().getMessage());
             ex.printStackTrace();
@@ -271,7 +277,7 @@ public void consultarAllEspecialidad() {
        public void consultarRecetabyCita() {
         try {
             this.listReceta = recetaDao.obtenerRecetabyCita(this.cita.getIdCita());
-            
+            System.out.println(listReceta.size());
       //this.listCita = citaDao.obtenerCitasbyPaciente(idPaciente);
             
         } catch (Exception ex) {
@@ -446,13 +452,7 @@ public void consultarAllEspecialidad() {
         this.medicamentoDao = medicamentoDao;
     }
 
-    public CitaMedicamentoPK getReceta() {
-        return receta;
-    }
-
-    public void setReceta(CitaMedicamentoPK receta) {
-        this.receta = receta;
-    }
+   
 
     public List<CitaMedicamento> getListReceta() {
         return listReceta;
@@ -492,6 +492,14 @@ public void consultarAllEspecialidad() {
 
     public void setExamenDao(ExamenDao examenDao) {
         this.examenDao = examenDao;
+    }
+
+    public CitaMedicamento getCitaMed() {
+        return citaMed;
+    }
+
+    public void setCitaMed(CitaMedicamento citaMed) {
+        this.citaMed = citaMed;
     }
 
     
